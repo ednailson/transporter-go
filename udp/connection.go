@@ -30,6 +30,10 @@ func (c *conn) Write(data []byte) error {
 	return err
 }
 
+func (c *conn) RemoteAddr() net.Addr {
+	return c.remoteAddr
+}
+
 func (c *conn) Close() error {
 	return c.udpConn.Close()
 }

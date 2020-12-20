@@ -27,6 +27,8 @@ func TestNewConnection(t *testing.T) {
 	g.Expect(sut.connection).Should(BeEquivalentTo(tcpConn))
 	g.Expect(sut.message).Should(BeEquivalentTo([]byte("test")))
 	g.Expect(sut.Message()).Should(BeEquivalentTo([]byte("test")))
+	g.Expect(sut.RemoteAddr()).ShouldNot(BeNil())
+	g.Expect(sut.RemoteAddr()).Should(BeEquivalentTo(tcpConn.RemoteAddr()))
 }
 
 func TestWrite(t *testing.T) {
@@ -64,26 +66,6 @@ func TestClose(t *testing.T) {
 	g.Expect(sut.Close()).ShouldNot(HaveOccurred())
 	g.Expect(sut.Close()).Should(HaveOccurred())
 }
-
-//
-//func TestConnectionType(t *testing.T) {
-//	RegisterTestingT(t)
-//	address := "127.0.0.1:9054"
-//	listener := mockTcpListener(address)
-//	defer listener.Close()
-//	ok := make(chan bool)
-//	go func() {
-//		_, err := listener.Accept()
-//		Expect(err).ShouldNot(HaveOccurred())
-//		ok <- true
-//	}()
-//	conn := fakeNetConn(address)
-//	<-ok
-//	addressConnector := connection.NewAddressConnector(conn.LocalAddr(), conn.RemoteAddr())
-//	context := NewTcpContext([]byte("teste"), addressConnector, conn)
-//	connectionType := context.ConnectionType()
-//	Expect(connectionType).Should(BeEquivalentTo("tcp"))
-//}
 
 func closeConn(g *GomegaWithT, closer io.Closer) {
 	g.Expect(closer.Close()).ShouldNot(HaveOccurred())

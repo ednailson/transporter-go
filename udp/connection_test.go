@@ -22,6 +22,8 @@ func TestNewConnection(t *testing.T) {
 	g.Expect(sut.message).Should(BeEquivalentTo(message))
 	g.Expect(sut.Message()).Should(BeEquivalentTo(message))
 	g.Expect(sut.remoteAddr).Should(BeEquivalentTo(fakeRemoteAddr(g)))
+	g.Expect(sut.RemoteAddr()).ShouldNot(BeNil())
+	g.Expect(sut.RemoteAddr().String()).Should(BeEquivalentTo(fakeRemoteAddr(g).String()))
 	g.Expect(sut.protocol).Should(BeEquivalentTo(protocol))
 }
 
