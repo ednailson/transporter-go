@@ -6,7 +6,7 @@ import (
 )
 
 const ip = "127.0.0.1"
-const port = 1001
+const port = 9066
 
 func TestNewTransporter(t *testing.T) {
 	g := NewGomegaWithT(t)
